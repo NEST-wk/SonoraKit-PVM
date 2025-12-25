@@ -1,4 +1,46 @@
 import { LiquidEther } from '../components/LiquidEther'
+import { SiOpenai, SiGooglegemini } from 'react-icons/si'
+
+// Custom AI Provider Icons as React components
+const AnthropicIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '1em', height: '1em' }}>
+    <path d="M17.604 3.324c.66 0 .996.386 1.206 1.105l3.128 10.11c.063.22.073.397.073.509 0 .597-.44.952-1.058.952-.492 0-.87-.271-1.017-.757l-.723-2.39h-4.632l-.723 2.39c-.147.486-.525.757-1.017.757-.618 0-1.058-.355-1.058-.952 0-.112.01-.289.073-.509l3.128-10.11c.21-.719.546-1.105 1.206-1.105zm-.014 2.416l-1.74 5.765h3.494l-1.74-5.765zM8.5 3c.83 0 1.5.67 1.5 1.5v15c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5v-15c0-.83.67-1.5 1.5-1.5z"/>
+  </svg>
+)
+
+const MistralIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '1em', height: '1em' }}>
+    <path d="M3 3h4v4H3V3zm7 0h4v4h-4V3zm7 0h4v4h-4V3zM3 10h4v4H3v-4zm14 0h4v4h-4v-4zM3 17h4v4H3v-4zm7 0h4v4h-4v-4zm7 0h4v4h-4v-4zm-7-7h4v4h-4v-4z"/>
+  </svg>
+)
+
+const CohereIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '1em', height: '1em' }}>
+    <circle cx="12" cy="12" r="10"/>
+  </svg>
+)
+
+const GroqIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '1em', height: '1em' }}>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6zm0-8H9V7h6v2z"/>
+  </svg>
+)
+
+const OpenRouterIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '1em', height: '1em' }}>
+    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+  </svg>
+)
+
+const aiProviderLogos = [
+  { node: <SiOpenai />, title: "OpenAI", href: "https://openai.com" },
+  { node: <AnthropicIcon />, title: "Anthropic", href: "https://anthropic.com" },
+  { node: <SiGooglegemini />, title: "Google Gemini", href: "https://deepmind.google/technologies/gemini/" },
+  { node: <MistralIcon />, title: "Mistral AI", href: "https://mistral.ai" },
+  { node: <CohereIcon />, title: "Cohere", href: "https://cohere.com" },
+  { node: <GroqIcon />, title: "Groq", href: "https://groq.com" },
+  { node: <OpenRouterIcon />, title: "OpenRouter", href: "https://openrouter.ai" },
+]
 
 export default function LandingPage() {
   return (
@@ -72,6 +114,8 @@ export default function LandingPage() {
             Connect to OpenAI, Anthropic, Google, Mistral, Cohere, Groq, and OpenRouter. 
             One platform, infinite possibilities. Secure, fast, and beautifully designed.
           </p>
+          
+          <div className="h-32 md:h-15"></div>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
             <button className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-semibold text-lg hover:opacity-90 transition-all hover:scale-105 shadow-xl shadow-[#5227FF]/30">
@@ -81,14 +125,28 @@ export default function LandingPage() {
               View Documentation
             </button>
           </div>
+          
+          <div className="h-32 md:h-20"></div>
 
-          {/* Provider Logos */}
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-            {['OpenAI', 'Anthropic', 'Google', 'Mistral', 'Cohere', 'Groq', 'OpenRouter'].map((provider) => (
-              <div key={provider} className="text-gray-400 text-sm font-medium px-4 py-2 rounded-lg bg-white/5 border border-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-default">
-                {provider}
-              </div>
-            ))}
+          {/* Provider Logos - Marquee */}
+          <div className="w-full max-w-4xl mx-auto overflow-hidden relative py-4">
+            <div className="flex animate-marquee">
+              {[...aiProviderLogos, ...aiProviderLogos].map((provider, index) => (
+                <a
+                  key={index}
+                  href={provider.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="flex-shrink-0 mx-16 text-gray-400 hover:text-white transition-colors text-4xl hover:scale-110"
+                  title={provider.title}
+                >
+                  {provider.node}
+                </a>
+              ))}
+            </div>
+            {/* Fade edges */}
+            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0a0a0f] to-transparent pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0a0a0f] to-transparent pointer-events-none" />
           </div>
         </section>
         
@@ -102,6 +160,8 @@ export default function LandingPage() {
               A complete platform for building AI-powered applications with enterprise-grade security.
             </p>
           </div>
+
+          <div className="h-32 md:h-48"></div>
 
           <div className="w-full flex justify-center">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
@@ -149,9 +209,12 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-        <div className="mb-2"></div>
+
+        {/* Spacer */}
+        <div className="h-32 md:h-48"></div>
+
         {/* CTA Section */}
-        <section className="py-24 px-6 md:px-12 lg:px-20">
+        <section className="py-20 px-6 md:px-12 lg:px-20">
           <div className="flex justify-center">
             <div className="w-full max-w-4xl p-12 md:p-16 rounded-3xl bg-gradient-to-br from-[#5227FF]/20 to-[#FF9FFC]/20 border border-white/10 backdrop-blur-sm text-center">
               <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
@@ -166,6 +229,8 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
+
+        <div className="h-32 md:h-48"></div>
 
         {/* Footer */}
         <footer className="py-12 px-6 border-t border-white/10 backdrop-blur-sm bg-[#0a0a0f]/50">
