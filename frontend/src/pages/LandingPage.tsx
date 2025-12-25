@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { SiOpenai, SiGooglegemini } from 'react-icons/si'
+import { HiLockClosed, HiRocketLaunch, HiBolt, HiPaintBrush, HiChartBar, HiArrowPath } from 'react-icons/hi2'
 
 // Lazy load heavy WebGL component
 const LiquidEther = lazy(() => import('../components/LiquidEther/LiquidEther'))
@@ -77,25 +78,23 @@ export default function LandingPage() {
       <div className="relative z-10">
         {/* Navigation - Only blur here */}
         <nav className="flex items-center justify-between px-6 py-5 md:px-12 lg:px-20 bg-[#0a0a0f]/70 backdrop-blur-[8px]">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#5227FF] to-[#FF9FFC] flex items-center justify-center shadow-lg shadow-[#5227FF]/30">
-              <span className="text-white font-bold text-lg">S</span>
-            </div>
+          <div className="flex items-center gap-3">
+            <img src="/sonorakit-logo.svg" alt="SonoraKit" className="w-10 h-10" />
             <span className="text-white font-semibold text-xl">SonoraKit</span>
           </div>
 
           <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a>
-            <a href="#providers" className="text-gray-300 hover:text-white transition-colors">Providers</a>
-            <a href="#pricing" className="text-gray-300 hover:text-white transition-colors">Pricing</a>
-            <a href="#docs" className="text-gray-300 hover:text-white transition-colors">Docs</a>
+            <a href="#features" className="text-gray-300 hover:text-white">Features</a>
+            <a href="#providers" className="text-gray-300 hover:text-white">Providers</a>
+            <a href="#pricing" className="text-gray-300 hover:text-white">Pricing</a>
+            <a href="#docs" className="text-gray-300 hover:text-white">Docs</a>
           </div>
 
           <div className="flex items-center gap-4" style={{ marginRight: '0.5rem' }}>
-            <button className="hidden md:block text-gray-300 hover:text-white transition-colors px-4 py-2">
+            <button className="hidden md:block text-gray-300 hover:text-white px-4 py-2">
               Sign In
             </button>
-            <button style={{ padding: '0.75rem 1.5rem' }} className="rounded-xl bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-medium hover:opacity-90 transition-opacity shadow-lg shadow-[#5227FF]/25">
+            <button style={{ padding: '0.75rem 1.5rem' }} className="rounded-xl bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-medium hover:opacity-90 shadow-lg shadow-[#5227FF]/25">
               Get Started
             </button>
           </div>
@@ -176,32 +175,32 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
               {[
                 {
-                  icon: '🔐',
+                  icon: <HiLockClosed className="text-4xl text-[#5227FF]" />,
                   title: 'Secure API Keys',
                   description: 'Military-grade Fernet encryption keeps your API keys safe and secure.'
                 },
                 {
-                  icon: '🚀',
+                  icon: <HiRocketLaunch className="text-4xl text-[#FF9FFC]" />,
                   title: 'Multi-Provider',
                   description: 'Switch between 7 AI providers seamlessly with a unified API.'
                 },
                 {
-                  icon: '⚡',
+                  icon: <HiBolt className="text-4xl text-yellow-400" />,
                   title: 'Blazing Fast',
                   description: 'Built with FastAPI and optimized for low-latency responses.'
                 },
                 {
-                  icon: '🎨',
+                  icon: <HiPaintBrush className="text-4xl text-[#B19EEF]" />,
                   title: 'Customizable UI',
                   description: 'Personalize colors, backgrounds, and avatars to match your brand.'
                 },
                 {
-                  icon: '📊',
+                  icon: <HiChartBar className="text-4xl text-green-400" />,
                   title: 'Usage Analytics',
                   description: 'Track token usage, costs, and performance across all providers.'
                 },
                 {
-                  icon: '🔄',
+                  icon: <HiArrowPath className="text-4xl text-cyan-400" />,
                   title: 'Real-time Sync',
                   description: 'Powered by Supabase for instant data synchronization.'
                 }
@@ -211,7 +210,7 @@ export default function LandingPage() {
                   className="rounded-2xl bg-[#0a0a0f]/80 border border-white/10 hover:bg-[#0a0a0f]/60 transition-colors"
                   style={{ padding: '2.5rem' }}
                 >
-                  <div className="text-4xl" style={{ marginBottom: '1.5rem' }}>{feature.icon}</div>
+                  <div style={{ marginBottom: '1.5rem' }}>{feature.icon}</div>
                   <h3 className="text-xl font-semibold text-white" style={{ marginBottom: '1rem' }}>{feature.title}</h3>
                   <p className="text-gray-400 leading-relaxed">{feature.description}</p>
                 </div>
@@ -234,7 +233,7 @@ export default function LandingPage() {
                 <p className="text-gray-400 text-lg md:text-xl">
                   Join thousands of developers building the future with SonoraKit PVM.
                 </p>
-                <button 
+                <button
                   className="group relative rounded-2xl bg-white text-[#0a0a0f] font-bold text-lg md:text-xl hover:bg-gray-100 transition-all hover:scale-105 shadow-2xl shadow-white/20 overflow-hidden"
                   style={{ padding: '1.25rem 3rem', letterSpacing: '0.025em' }}
                 >
@@ -251,17 +250,15 @@ export default function LandingPage() {
         {/* Footer */}
         <footer className="py-12 px-6 border-t border-white/10 bg-[#0a0a0f]/90">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#5227FF] to-[#FF9FFC] flex items-center justify-center">
-                <span className="text-white font-bold text-sm">S</span>
-              </div>
+            <div className="flex items-center gap-3">
+              <img src="/sonorakit-logo.svg" alt="SonoraKit" className="w-8 h-8" />
               <span className="text-white font-semibold">SonoraKit PVM</span>
             </div>
 
             <div className="flex items-center gap-6 text-gray-400 text-sm">
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
-              <a href="#" className="hover:text-white transition-colors">GitHub</a>
+              <a href="#" className="hover:text-white">Privacy</a>
+              <a href="#" className="hover:text-white">Terms</a>
+              <a href="#" className="hover:text-white">GitHub</a>
             </div>
 
             <p className="text-gray-500 text-sm">
