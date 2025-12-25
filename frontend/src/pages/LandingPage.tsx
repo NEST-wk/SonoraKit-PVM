@@ -126,10 +126,10 @@ export default function LandingPage() {
               <span className="relative z-10">Start Building Free</span>
               <div className="absolute inset-0 bg-gradient-to-r from-[#5227FF]/10 to-[#FF9FFC]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
-            <button className="group relative rounded-2xl bg-black text-white font-bold text-lg md:text-xl hover:bg-gray-900 transition-all hover:scale-105 shadow-2xl shadow-black/40 overflow-hidden border border-white/10" style={{ padding: '1.25rem 3rem', letterSpacing: '0.025em' }}>
+            <a href="https://github.com/NEST-wk/SonoraKit-PVM" target="_blank" rel="noopener noreferrer" className="group relative rounded-2xl bg-black text-white font-bold text-lg md:text-xl hover:bg-gray-900 transition-all hover:scale-105 shadow-2xl shadow-black/40 overflow-hidden border border-white/10" style={{ padding: '1.25rem 3rem', letterSpacing: '0.025em' }}>
               <span className="relative z-10">View Documentation</span>
               <div className="absolute inset-0 bg-gradient-to-r from-[#5227FF]/10 to-[#FF9FFC]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </button>
+            </a>
           </div>
 
           <div className="h-32 md:h-20"></div>
