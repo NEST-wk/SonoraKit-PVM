@@ -1,5 +1,8 @@
-import { LiquidEther } from '../components/LiquidEther'
+import { lazy, Suspense } from 'react'
 import { SiOpenai, SiGooglegemini } from 'react-icons/si'
+
+// Lazy load heavy WebGL component
+const LiquidEther = lazy(() => import('../components/LiquidEther/LiquidEther'))
 
 // Custom AI Provider Icons as React components
 const AnthropicIcon = () => (
@@ -45,33 +48,35 @@ const aiProviderLogos = [
 export default function LandingPage() {
   return (
     <div className="relative min-h-screen bg-[#0a0a0f] overflow-x-hidden">
-      {/* Background Effect */}
+      {/* Background Effect - Optimized */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <LiquidEther
-          colors={['#5227FF', '#FF9FFC', '#B19EEF']}
-          mouseForce={25}
-          cursorSize={120}
-          isViscous={false}
-          viscous={30}
-          iterationsViscous={32}
-          iterationsPoisson={32}
-          resolution={0.5}
-          isBounce={false}
-          autoDemo={true}
-          autoSpeed={0.6}
-          autoIntensity={2.5}
-          takeoverDuration={0.25}
-          autoResumeDelay={2000}
-          autoRampDuration={0.6}
-          style={{ width: '100%', height: '100%' }}
-          className="opacity-80"
-        />
+        <Suspense fallback={<div className="w-full h-full bg-[#0a0a0f]" />}>
+          <LiquidEther
+            colors={['#5227FF', '#FF9FFC', '#B19EEF']}
+            mouseForce={15}
+            cursorSize={100}
+            isViscous={false}
+            viscous={20}
+            iterationsViscous={16}
+            iterationsPoisson={16}
+            resolution={0.25}
+            isBounce={false}
+            autoDemo={true}
+            autoSpeed={0.4}
+            autoIntensity={2.0}
+            takeoverDuration={0.3}
+            autoResumeDelay={3000}
+            autoRampDuration={0.8}
+            style={{ width: '100%', height: '100%' }}
+            className="opacity-70"
+          />
+        </Suspense>
       </div>
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Navigation */}
-        <nav className="flex items-center justify-between px-6 py-5 md:px-12 lg:px-20 backdrop-blur-sm bg-[#0a0a0f]/30">
+        {/* Navigation - Only blur here */}
+        <nav className="flex items-center justify-between px-6 py-5 md:px-12 lg:px-20 bg-[#0a0a0f]/70 backdrop-blur-[8px]">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#5227FF] to-[#FF9FFC] flex items-center justify-center shadow-lg shadow-[#5227FF]/30">
               <span className="text-white font-bold text-lg">S</span>
@@ -98,7 +103,7 @@ export default function LandingPage() {
 
         {/* Hero Section */}
         <section className="flex flex-col items-center justify-center min-h-[90vh] px-6 text-center pt-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0a0a0f]/80 border border-white/10 mb-8">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
             <span className="text-sm text-gray-300">7 AI Providers · Unlimited Possibilities</span>
           </div>
@@ -121,32 +126,34 @@ export default function LandingPage() {
             <button className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-semibold text-lg hover:opacity-90 transition-all hover:scale-105 shadow-xl shadow-[#5227FF]/30">
               Start Building Free
             </button>
-            <button className="px-8 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-semibold text-lg hover:bg-white/10 transition-all backdrop-blur-sm">
+            <button className="px-8 py-4 rounded-xl bg-[#0a0a0f]/80 border border-white/10 text-white font-semibold text-lg hover:bg-[#0a0a0f]/60 transition-colors">
               View Documentation
             </button>
           </div>
           
           <div className="h-32 md:h-20"></div>
 
-          {/* Provider Logos - Marquee */}
-          <div className="w-full max-w-4xl mx-auto overflow-hidden relative py-4">
-            <div className="flex animate-marquee">
-              {[...aiProviderLogos, ...aiProviderLogos].map((provider, index) => (
-                <a
-                  key={index}
-                  href={provider.href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="flex-shrink-0 mx-16 text-gray-400 hover:text-white transition-colors text-4xl hover:scale-110"
-                  title={provider.title}
-                >
-                  {provider.node}
-                </a>
+          {/* Provider Logos - Infinite Marquee */}
+          <div className="w-full max-w-5xl mx-auto overflow-hidden relative py-4 marquee-container">
+            <div className="marquee-track">
+              {/* Logos duplicated 4x for seamless infinite loop */}
+              {[...aiProviderLogos, ...aiProviderLogos, ...aiProviderLogos, ...aiProviderLogos].map((provider, index) => (
+                <div key={index} className="marquee-item">
+                  <a
+                    href={provider.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="text-gray-400 hover:text-white transition-colors text-4xl inline-block"
+                    title={provider.title}
+                  >
+                    {provider.node}
+                  </a>
+                </div>
               ))}
             </div>
             {/* Fade edges */}
-            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0a0a0f] to-transparent pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0a0a0f] to-transparent pointer-events-none" />
+            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0a0a0f] to-transparent pointer-events-none z-10" />
+            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0a0a0f] to-transparent pointer-events-none z-10" />
           </div>
         </section>
         
@@ -199,7 +206,7 @@ export default function LandingPage() {
               ].map((feature, i) => (
                 <div
                   key={i}
-                  className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all hover:scale-[1.02] backdrop-blur-sm"
+                  className="p-8 rounded-2xl bg-[#0a0a0f]/80 border border-white/10 hover:bg-[#0a0a0f]/60 transition-colors"
                 >
                   <div className="text-4xl mb-5">{feature.icon}</div>
                   <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
@@ -216,7 +223,7 @@ export default function LandingPage() {
         {/* CTA Section */}
         <section className="py-20 px-6 md:px-12 lg:px-20">
           <div className="flex justify-center">
-            <div className="w-full max-w-4xl p-12 md:p-16 rounded-3xl bg-gradient-to-br from-[#5227FF]/20 to-[#FF9FFC]/20 border border-white/10 backdrop-blur-sm text-center">
+            <div className="w-full max-w-4xl p-12 md:p-16 rounded-3xl bg-gradient-to-br from-[#5227FF]/30 to-[#FF9FFC]/20 border border-white/10 text-center">
               <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
                 Ready to Get Started?
               </h2>
@@ -233,7 +240,7 @@ export default function LandingPage() {
         <div className="h-32 md:h-48"></div>
 
         {/* Footer */}
-        <footer className="py-12 px-6 border-t border-white/10 backdrop-blur-sm bg-[#0a0a0f]/50">
+        <footer className="py-12 px-6 border-t border-white/10 bg-[#0a0a0f]/90">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#5227FF] to-[#FF9FFC] flex items-center justify-center">

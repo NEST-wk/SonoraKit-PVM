@@ -16,13 +16,23 @@
   box-sizing: border-box;
 }
 
+/* Performance optimizations */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   min-height: 100vh;
   overflow-x: hidden;
+  /* Enable GPU compositing */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 #root {
   min-height: 100vh;
+  /* Create new stacking context for better layer management */
+  isolation: isolate;
 }
 
 /* Scrollbar */
@@ -43,20 +53,32 @@ body {
   background: #7b52ff;
 }
 
-/* Marquee Animation */
+/* Infinite Marquee Animation */
+.marquee-container {
+  --marquee-speed: 30s;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-speed) linear infinite;
+  will-change: transform;
+}
+
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  flex-shrink: 0;
+  padding: 0 2.5rem;
+}
+
 @keyframes marquee {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
-}
-
-.animate-marquee {
-  animation: marquee 20s linear infinite;
-}
-
-.animate-marquee:hover {
-  animation-play-state: paused;
 }
