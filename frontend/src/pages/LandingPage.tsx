@@ -83,7 +83,7 @@ export default function LandingPage() {
             </div>
             <span className="text-white font-semibold text-xl">SonoraKit</span>
           </div>
-          
+
           <div className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a>
             <a href="#providers" className="text-gray-300 hover:text-white transition-colors">Providers</a>
@@ -91,11 +91,11 @@ export default function LandingPage() {
             <a href="#docs" className="text-gray-300 hover:text-white transition-colors">Docs</a>
           </div>
 
-          <div className="flex items-center gap-4">
-            <button className="hidden md:block text-gray-300 hover:text-white transition-colors">
+          <div className="flex items-center gap-4" style={{ marginRight: '0.5rem' }}>
+            <button className="hidden md:block text-gray-300 hover:text-white transition-colors px-4 py-2">
               Sign In
             </button>
-            <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-medium hover:opacity-90 transition-opacity shadow-lg shadow-[#5227FF]/25">
+            <button style={{ padding: '0.75rem 1.5rem' }} className="rounded-xl bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-medium hover:opacity-90 transition-opacity shadow-lg shadow-[#5227FF]/25">
               Get Started
             </button>
           </div>
@@ -119,18 +119,20 @@ export default function LandingPage() {
             Connect to OpenAI, Anthropic, Google, Mistral, Cohere, Groq, and OpenRouter. 
             One platform, infinite possibilities. Secure, fast, and beautifully designed.
           </p>
-          
+
           <div className="h-32 md:h-15"></div>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
-            <button className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-semibold text-lg hover:opacity-90 transition-all hover:scale-105 shadow-xl shadow-[#5227FF]/30">
-              Start Building Free
+            <button className="group relative rounded-2xl bg-white text-[#0a0a0f] font-bold text-lg md:text-xl hover:bg-gray-100 transition-all hover:scale-105 shadow-2xl shadow-white/20 overflow-hidden" style={{ padding: '1.25rem 3rem', letterSpacing: '0.025em' }}>
+              <span className="relative z-10">Start Building Free</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#5227FF]/10 to-[#FF9FFC]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
-            <button className="px-8 py-4 rounded-xl bg-[#0a0a0f]/80 border border-white/10 text-white font-semibold text-lg hover:bg-[#0a0a0f]/60 transition-colors">
-              View Documentation
+            <button className="group relative rounded-2xl bg-black text-white font-bold text-lg md:text-xl hover:bg-gray-900 transition-all hover:scale-105 shadow-2xl shadow-black/40 overflow-hidden border border-white/10" style={{ padding: '1.25rem 3rem', letterSpacing: '0.025em' }}>
+              <span className="relative z-10">View Documentation</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#5227FF]/10 to-[#FF9FFC]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
           </div>
-          
+
           <div className="h-32 md:h-20"></div>
 
           {/* Provider Logos - Infinite Marquee */}
@@ -156,7 +158,7 @@ export default function LandingPage() {
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0a0a0f] to-transparent pointer-events-none z-10" />
           </div>
         </section>
-        
+
         {/* Features Section */}
         <section id="features" className="py-32 px-6 md:px-12 lg:px-20">
           <div className="flex flex-col items-center mb-20">
@@ -206,10 +208,11 @@ export default function LandingPage() {
               ].map((feature, i) => (
                 <div
                   key={i}
-                  className="p-8 rounded-2xl bg-[#0a0a0f]/80 border border-white/10 hover:bg-[#0a0a0f]/60 transition-colors"
+                  className="rounded-2xl bg-[#0a0a0f]/80 border border-white/10 hover:bg-[#0a0a0f]/60 transition-colors"
+                  style={{ padding: '2.5rem' }}
                 >
-                  <div className="text-4xl mb-5">{feature.icon}</div>
-                  <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
+                  <div className="text-4xl" style={{ marginBottom: '1.5rem' }}>{feature.icon}</div>
+                  <h3 className="text-xl font-semibold text-white" style={{ marginBottom: '1rem' }}>{feature.title}</h3>
                   <p className="text-gray-400 leading-relaxed">{feature.description}</p>
                 </div>
               ))}
@@ -223,16 +226,22 @@ export default function LandingPage() {
         {/* CTA Section */}
         <section className="py-20 px-6 md:px-12 lg:px-20">
           <div className="flex justify-center">
-            <div className="w-full max-w-4xl p-12 md:p-16 rounded-3xl bg-gradient-to-br from-[#5227FF]/30 to-[#FF9FFC]/20 border border-white/10 text-center">
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-                Ready to Get Started?
-              </h2>
-              <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-xl mx-auto">
-                Join thousands of developers building the future with SonoraKit PVM.
-              </p>
-              <button className="px-10 py-5 rounded-xl bg-white text-[#0a0a0f] font-semibold text-lg hover:opacity-90 transition-all hover:scale-105 shadow-xl">
-                Create Free Account
-              </button>
+            <div className="w-full max-w-4xl rounded-3xl bg-gradient-to-br from-[#5227FF]/30 to-[#FF9FFC]/20 border border-white/10" style={{ padding: '6rem 4rem' }}>
+              <div className="flex flex-col items-center text-center" style={{ gap: '3rem' }}>
+                <h2 className="text-3xl md:text-5xl font-bold text-white">
+                  Ready to Get Started?
+                </h2>
+                <p className="text-gray-400 text-lg md:text-xl">
+                  Join thousands of developers building the future with SonoraKit PVM.
+                </p>
+                <button 
+                  className="group relative rounded-2xl bg-white text-[#0a0a0f] font-bold text-lg md:text-xl hover:bg-gray-100 transition-all hover:scale-105 shadow-2xl shadow-white/20 overflow-hidden"
+                  style={{ padding: '1.25rem 3rem', letterSpacing: '0.025em' }}
+                >
+                  <span className="relative z-10">Create Free Account</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#5227FF]/10 to-[#FF9FFC]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -248,7 +257,7 @@ export default function LandingPage() {
               </div>
               <span className="text-white font-semibold">SonoraKit PVM</span>
             </div>
-            
+
             <div className="flex items-center gap-6 text-gray-400 text-sm">
               <a href="#" className="hover:text-white transition-colors">Privacy</a>
               <a href="#" className="hover:text-white transition-colors">Terms</a>
