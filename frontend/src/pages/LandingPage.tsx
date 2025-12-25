@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react'
+import { Link } from 'react-router-dom'
 import { SiOpenai, SiGooglegemini } from 'react-icons/si'
 import { HiLockClosed, HiRocketLaunch, HiBolt, HiPaintBrush, HiChartBar, HiArrowPath } from 'react-icons/hi2'
 
@@ -91,12 +92,12 @@ export default function LandingPage() {
           </div>
 
           <div className="flex items-center gap-4" style={{ marginRight: '0.5rem' }}>
-            <button className="hidden md:block text-gray-300 hover:text-white px-4 py-2">
+            <Link to="/login" className="hidden md:block text-gray-300 hover:text-white px-4 py-2">
               Sign In
-            </button>
-            <button style={{ padding: '0.75rem 1.5rem' }} className="rounded-xl bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-medium hover:opacity-90 shadow-lg shadow-[#5227FF]/25">
+            </Link>
+            <Link to="/register" style={{ padding: '0.75rem 1.5rem' }} className="rounded-xl bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-medium hover:opacity-90 shadow-lg shadow-[#5227FF]/25">
               Get Started
-            </button>
+            </Link>
           </div>
         </nav>
 
@@ -122,10 +123,10 @@ export default function LandingPage() {
           <div className="h-32 md:h-15"></div>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
-            <button className="group relative rounded-2xl bg-white text-[#0a0a0f] font-bold text-lg md:text-xl hover:bg-gray-100 transition-all hover:scale-105 shadow-2xl shadow-white/20 overflow-hidden" style={{ padding: '1.25rem 3rem', letterSpacing: '0.025em' }}>
+            <Link to="/register" className="group relative rounded-2xl bg-white text-[#0a0a0f] font-bold text-lg md:text-xl hover:bg-gray-100 transition-all hover:scale-105 shadow-2xl shadow-white/20 overflow-hidden" style={{ padding: '1.25rem 3rem', letterSpacing: '0.025em' }}>
               <span className="relative z-10">Start Building Free</span>
               <div className="absolute inset-0 bg-gradient-to-r from-[#5227FF]/10 to-[#FF9FFC]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </button>
+            </Link>
             <a href="https://github.com/NEST-wk/SonoraKit-PVM" target="_blank" rel="noopener noreferrer" className="group relative rounded-2xl bg-black text-white font-bold text-lg md:text-xl hover:bg-gray-900 transition-all hover:scale-105 shadow-2xl shadow-black/40 overflow-hidden border border-white/10" style={{ padding: '1.25rem 3rem', letterSpacing: '0.025em' }}>
               <span className="relative z-10">View Documentation</span>
               <div className="absolute inset-0 bg-gradient-to-r from-[#5227FF]/10 to-[#FF9FFC]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -233,13 +234,14 @@ export default function LandingPage() {
                 <p className="text-gray-400 text-lg md:text-xl">
                   Join thousands of developers building the future with SonoraKit PVM.
                 </p>
-                <button
+                <Link
+                  to="/register"
                   className="group relative rounded-2xl bg-white text-[#0a0a0f] font-bold text-lg md:text-xl hover:bg-gray-100 transition-all hover:scale-105 shadow-2xl shadow-white/20 overflow-hidden"
                   style={{ padding: '1.25rem 3rem', letterSpacing: '0.025em' }}
                 >
                   <span className="relative z-10">Create Free Account</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-[#5227FF]/10 to-[#FF9FFC]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </button>
+                </Link>
               </div>
             </div>
           </div>
