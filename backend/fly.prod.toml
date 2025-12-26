@@ -1,0 +1,25 @@
+# fly.toml - Production Environment
+# Run: fly launch --config fly.prod.toml --name sonorakit-api
+
+app = 'sonorakit-api'
+primary_region = 'dfw'
+
+[build]
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ['app']
+
+[[vm]]
+  memory = '512mb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+[env]
+  DEBUG = "false"
+  APP_NAME = "SonoraKit PVM API"
+  ALLOWED_ORIGINS = "https://sonorakit.vercel.app,https://sonorakit.com"

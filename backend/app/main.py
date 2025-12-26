@@ -8,7 +8,7 @@ from contextlib import asynccontextmanager
 
 from app.core.config import settings
 from app.core.logger import logger
-from app.api.routes import health, ai_configs
+from app.api.routes import health, ai_configs, auth
 
 
 @asynccontextmanager
@@ -50,6 +50,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 # Routes
 app.include_router(health.router, prefix="/api/v1")
 app.include_router(ai_configs.router, prefix="/api/v1")
+app.include_router(auth.router, prefix="/api/v1")
 
 
 @app.get("/")

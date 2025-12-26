@@ -3,10 +3,16 @@ import { Link } from 'react-router-dom'
 import { HiEye, HiEyeSlash } from 'react-icons/hi2'
 import { FaGoogle, FaGithub } from 'react-icons/fa'
 import { HiSparkles, HiShieldCheck, HiRocketLaunch } from 'react-icons/hi2'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function RegisterPage() {
+  const { signUp, signInWithGoogle, signInWithGithub } = useAuth()
+  
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,12 +22,74 @@ export default function RegisterPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+    setError(null)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Implement registration logic with Supabase
-    console.log('Register:', formData)
+    setError(null)
+    
+    // Validations
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
+    
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters')
+      return
+    }
+
+    setLoading(true)
+    
+    const { error } = await signUp(formData.email, formData.password, formData.name)
+    
+    if (error) {
+      setError(error.message)
+      setLoading(false)
+    } else {
+      setSuccess(true)
+      setLoading(false)
+    }
+  }
+
+  const handleGoogleSignUp = async () => {
+    setError(null)
+    const { error } = await signInWithGoogle()
+    if (error) setError(error.message)
+  }
+
+  const handleGithubSignUp = async () => {
+    setError(null)
+    const { error } = await signInWithGithub()
+    if (error) setError(error.message)
+  }
+
+  // Success screen
+  if (success) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center px-4">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#5227FF]/20 rounded-full blur-[180px]" />
+        </div>
+        <div className="relative text-center max-w-md">
+          <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <HiShieldCheck className="text-green-500 text-4xl" />
+          </div>
+          <h1 className="text-3xl font-bold text-white mb-4">Check your email</h1>
+          <p className="text-gray-400 mb-8">
+            We've sent a confirmation link to <span className="text-white">{formData.email}</span>. 
+            Click the link to verify your account.
+          </p>
+          <Link 
+            to="/login"
+            className="inline-block bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-semibold px-8 py-3 rounded-xl hover:opacity-90 transition-all"
+          >
+            Go to Login
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -147,6 +215,13 @@ export default function RegisterPage() {
               </div>
             </div>
 
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4" style={{ marginTop: '24px' }}>
+                <p className="text-red-400 text-sm">{error}</p>
+              </div>
+            )}
+
             {/* Terms Checkbox */}
             <div className="flex items-start gap-3" style={{ marginTop: '24px' }}>
               <input
@@ -166,10 +241,19 @@ export default function RegisterPage() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-bold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-[#5227FF]/30 text-lg"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-bold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-[#5227FF]/30 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ marginTop: '28px', padding: '16px' }}
             >
-              Create Account
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  Creating account...
+                </span>
+              ) : 'Create Account'}
             </button>
           </form>
 
@@ -198,6 +282,7 @@ export default function RegisterPage() {
             {/* Social Buttons */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <button 
+                onClick={handleGoogleSignUp}
                 className="flex items-center justify-center gap-4 bg-white text-gray-900 font-semibold rounded-xl hover:bg-gray-100 transition-all w-full"
                 style={{ padding: '18px' }}
               >
@@ -205,6 +290,7 @@ export default function RegisterPage() {
                 Continue with Google
               </button>
               <button 
+                onClick={handleGithubSignUp}
                 className="flex items-center justify-center gap-4 bg-[#24292e] text-white font-semibold rounded-xl hover:bg-[#2f363d] transition-all w-full"
                 style={{ padding: '18px' }}
               >
@@ -267,12 +353,14 @@ export default function RegisterPage() {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#12121a] border-t border-white/10 p-6">
         <div className="flex gap-4">
           <button 
+            onClick={handleGoogleSignUp}
             className="flex-1 flex items-center justify-center gap-2 bg-white text-gray-900 font-semibold rounded-xl py-4"
           >
             <FaGoogle />
             Google
           </button>
           <button 
+            onClick={handleGithubSignUp}
             className="flex-1 flex items-center justify-center gap-2 bg-[#24292e] text-white font-semibold rounded-xl py-4"
           >
             <FaGithub />

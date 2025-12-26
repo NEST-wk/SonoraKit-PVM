@@ -18,10 +18,12 @@ class Settings(BaseSettings):
     master_key: str = ""
     secret_key: str = "dev-secret-key"
 
-    # Supabase
-    supabase_url: str = ""
-    supabase_anon_key: str = ""
-    supabase_service_key: str = ""
+    # Database (Neon PostgreSQL)
+    database_url: str = ""
+
+    # Firebase (for token verification)
+    firebase_project_id: str = ""
+    firebase_api_key: str = ""
 
     # CORS
     allowed_origins: str = "http://localhost:3000,http://localhost:5173"
