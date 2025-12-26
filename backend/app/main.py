@@ -8,7 +8,7 @@ from contextlib import asynccontextmanager
 
 from app.core.config import settings
 from app.core.logger import logger
-from app.api.routes import health, ai_configs, auth
+from app.api.routes import health, ai_configs, auth, chat
 
 
 @asynccontextmanager
@@ -27,11 +27,11 @@ app = FastAPI(
     redoc_url="/redoc" if settings.debug else None,
 )
 
-# CORS
+# CORS - Allow all origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -51,6 +51,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 app.include_router(health.router, prefix="/api/v1")
 app.include_router(ai_configs.router, prefix="/api/v1")
 app.include_router(auth.router, prefix="/api/v1")
+app.include_router(chat.router, prefix="/api/v1")
 
 
 @app.get("/")

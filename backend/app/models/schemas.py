@@ -25,7 +25,6 @@ class AIConfigUpdate(BaseModel):
 class AIConfigResponse(BaseModel):
     """Respuesta de configuración de IA."""
     id: str
-    user_id: str
     provider_name: str
     selected_model: str
     has_api_key: bool = True

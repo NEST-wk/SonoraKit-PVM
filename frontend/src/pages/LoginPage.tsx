@@ -69,63 +69,69 @@ export default function LoginPage() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative z-10">
         <div className="w-full max-w-md">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 mb-10">
-            <img 
-              src="/sonorakit-logo.svg" 
-              alt="SonoraKit" 
-              className="h-10 w-10"
-            />
-            <span className="text-2xl font-bold text-white">SonoraKit</span>
-          </Link>
+          <div style={{ marginBottom: '3rem' }}>
+            <Link to="/" className="flex items-center gap-3">
+              <img 
+                src="/sonorakit-logo.svg" 
+                alt="SonoraKit" 
+                className="h-10 w-10"
+              />
+              <span className="text-2xl font-bold text-white">SonoraKit</span>
+            </Link>
+          </div>
 
           {/* Header */}
-          <h1 className="text-3xl font-bold text-white mb-2">
-            Welcome back
-          </h1>
-          <p className="text-gray-400 mb-8">
-            Sign in to continue with your AI conversations
-          </p>
+          <div style={{ marginBottom: '3rem' }}>
+            <h1 className="text-4xl font-bold text-white" style={{ marginBottom: '0.75rem' }}>
+              Welcome back
+            </h1>
+            <p className="text-gray-400 text-lg">
+              Sign in to continue with your AI conversations
+            </p>
+          </div>
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm">
+            <div style={{ marginBottom: '1.5rem', padding: '1rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '0.75rem', color: '#f87171', fontSize: '0.875rem' }}>
               {error}
             </div>
           )}
 
           {/* Social Login */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            <button 
-              onClick={handleGoogleSignIn}
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white transition-all cursor-pointer"
-            >
-              <FaGoogle className="text-lg" />
-              <span>Google</span>
-            </button>
-            <button 
-              onClick={handleGithubSignIn}
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white transition-all cursor-pointer"
-            >
-              <FaGithub className="text-lg" />
-              <span>GitHub</span>
-            </button>
+          <div style={{ marginBottom: '2rem' }}>
+            <div className="grid grid-cols-2 gap-4">
+              <button 
+                onClick={handleGoogleSignIn}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', padding: '1rem', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.75rem', color: 'white', cursor: 'pointer' }}
+              >
+                <FaGoogle className="text-lg" />
+                <span>Google</span>
+              </button>
+              <button 
+                onClick={handleGithubSignIn}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', padding: '1rem', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.75rem', color: 'white', cursor: 'pointer' }}
+              >
+                <FaGithub className="text-lg" />
+                <span>GitHub</span>
+              </button>
+            </div>
           </div>
 
           {/* Divider */}
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/10"></div>
+          <div style={{ position: 'relative', marginBottom: '2rem' }}>
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center' }}>
+              <div style={{ width: '100%', borderTop: '1px solid rgba(255,255,255,0.1)' }}></div>
             </div>
-            <div className="relative flex justify-center">
-              <span className="px-4 bg-[#0a0a0f] text-gray-500 text-sm">or continue with email</span>
+            <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
+              <span style={{ padding: '0 1rem', backgroundColor: '#0a0a0f', color: '#6b7280', fontSize: '0.875rem' }}>or continue with email</span>
             </div>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit}>
             {/* Email */}
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+            <div style={{ marginBottom: '1.75rem' }}>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#d1d5db', marginBottom: '0.75rem' }}>
                 Email
               </label>
               <input
@@ -135,21 +141,21 @@ export default function LoginPage() {
                 onChange={handleChange}
                 required
                 placeholder="your@email.com"
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#5227FF] focus:ring-1 focus:ring-[#5227FF] transition-all"
+                style={{ width: '100%', padding: '1rem 1.25rem', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.75rem', color: 'white', fontSize: '1rem', outline: 'none' }}
               />
             </div>
 
             {/* Password */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-medium text-gray-300">
+            <div style={{ marginBottom: '2rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                <label style={{ fontSize: '0.875rem', fontWeight: 500, color: '#d1d5db' }}>
                   Password
                 </label>
-                <Link to="/forgot-password" className="text-sm text-[#5227FF] hover:text-[#7b52ff] transition-colors">
+                <Link to="/forgot-password" style={{ fontSize: '0.875rem', color: '#5227FF' }}>
                   Forgot password?
                 </Link>
               </div>
-              <div className="relative">
+              <div style={{ position: 'relative' }}>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="password"
@@ -157,12 +163,12 @@ export default function LoginPage() {
                   onChange={handleChange}
                   required
                   placeholder="Enter your password"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#5227FF] focus:ring-1 focus:ring-[#5227FF] transition-all pr-12"
+                  style={{ width: '100%', padding: '1rem 1.25rem', paddingRight: '3rem', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.75rem', color: 'white', fontSize: '1rem', outline: 'none' }}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                  style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer' }}
                 >
                   {showPassword ? <HiEyeSlash className="text-xl" /> : <HiEye className="text-xl" />}
                 </button>
@@ -170,13 +176,14 @@ export default function LoginPage() {
             </div>
 
             {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-[#5227FF] to-[#7b52ff] text-white font-semibold py-3 rounded-xl hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-            >
+            <div style={{ marginBottom: '2rem' }}>
+              <button
+                type="submit"
+                disabled={loading}
+                style={{ width: '100%', padding: '1rem', background: 'linear-gradient(to right, #5227FF, #7b52ff)', color: 'white', fontWeight: 600, fontSize: '1rem', borderRadius: '0.75rem', border: 'none', cursor: 'pointer', opacity: loading ? 0.5 : 1 }}
+              >
               {loading ? (
-                <span className="flex items-center justify-center gap-2">
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                   <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
@@ -186,13 +193,14 @@ export default function LoginPage() {
               ) : (
                 'Sign In'
               )}
-            </button>
+              </button>
+            </div>
           </form>
 
           {/* Sign Up Link */}
-          <p className="text-center text-gray-400 mt-8">
+          <p style={{ textAlign: 'center', color: '#9ca3af' }}>
             Don't have an account?{' '}
-            <Link to="/register" className="text-[#5227FF] hover:text-[#7b52ff] font-medium transition-colors">
+            <Link to="/register" style={{ color: '#5227FF', fontWeight: 500 }}>
               Sign up for free
             </Link>
           </p>
@@ -200,61 +208,66 @@ export default function LoginPage() {
       </div>
 
       {/* Right Side - Hero */}
-      <div className="hidden lg:flex lg:w-1/2 relative items-center justify-center p-12">
+      <div style={{ display: 'none', position: 'relative', alignItems: 'center', justifyContent: 'center', padding: '4rem' }} className="lg:!flex lg:w-1/2">
         {/* Decorative border */}
-        <div className="absolute inset-4 border border-white/5 rounded-3xl" />
+        <div style={{ position: 'absolute', inset: '1.5rem', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '1.5rem' }} />
         
-        <div className="relative z-10 max-w-lg text-center">
+        <div style={{ position: 'relative', zIndex: 10, maxWidth: '32rem', textAlign: 'center' }}>
           {/* Icon */}
-          <div className="w-20 h-20 bg-gradient-to-br from-[#5227FF] to-[#FF9FFC] rounded-2xl flex items-center justify-center mx-auto mb-8 rotate-3 shadow-lg shadow-[#5227FF]/25">
-            <HiChatBubbleLeftRight className="text-white text-4xl" />
+          <div style={{ marginBottom: '3rem' }}>
+            <div style={{ width: '6rem', height: '6rem', background: 'linear-gradient(to bottom right, #5227FF, #FF9FFC)', borderRadius: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', transform: 'rotate(3deg)', boxShadow: '0 10px 25px rgba(82, 39, 255, 0.25)' }}>
+              <HiChatBubbleLeftRight style={{ color: 'white', fontSize: '3rem' }} />
+            </div>
           </div>
 
-          <h2 className="text-4xl font-bold text-white mb-6">
-            Your AI, Your Rules
-          </h2>
-          
-          <p className="text-xl text-gray-400 mb-10 leading-relaxed">
-            Access all your favorite AI models in one place. 
-            Switch between providers seamlessly.
-          </p>
+          {/* Title */}
+          <div style={{ marginBottom: '3.5rem' }}>
+            <h2 style={{ fontSize: '3rem', fontWeight: 700, color: 'white', marginBottom: '1.5rem' }}>
+              Your AI, Your Rules
+            </h2>
+            
+            <p style={{ fontSize: '1.25rem', color: '#9ca3af', lineHeight: 1.7 }}>
+              Access all your favorite AI models in one place. 
+              Switch between providers seamlessly.
+            </p>
+          </div>
 
           {/* Features */}
-          <div className="space-y-4 text-left">
-            <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10">
-              <div className="w-10 h-10 bg-[#5227FF]/20 rounded-lg flex items-center justify-center shrink-0">
-                <HiCpuChip className="text-[#5227FF] text-xl" />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', textAlign: 'left' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', padding: '1.5rem', backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '0.75rem', border: '1px solid rgba(255,255,255,0.1)' }}>
+              <div style={{ width: '3.5rem', height: '3.5rem', backgroundColor: 'rgba(82, 39, 255, 0.2)', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <HiCpuChip style={{ color: '#5227FF', fontSize: '1.5rem' }} />
               </div>
               <div>
-                <h3 className="text-white font-medium">Multi-Provider Support</h3>
-                <p className="text-gray-500 text-sm">OpenAI, Anthropic, Google, and more</p>
+                <h3 style={{ color: 'white', fontWeight: 600, fontSize: '1.125rem', marginBottom: '0.25rem' }}>Multi-Provider Support</h3>
+                <p style={{ color: '#6b7280' }}>OpenAI, Anthropic, Google, and more</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10">
-              <div className="w-10 h-10 bg-[#FF9FFC]/20 rounded-lg flex items-center justify-center shrink-0">
-                <HiSparkles className="text-[#FF9FFC] text-xl" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', padding: '1.5rem', backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '0.75rem', border: '1px solid rgba(255,255,255,0.1)' }}>
+              <div style={{ width: '3.5rem', height: '3.5rem', backgroundColor: 'rgba(255, 159, 252, 0.2)', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <HiSparkles style={{ color: '#FF9FFC', fontSize: '1.5rem' }} />
               </div>
               <div>
-                <h3 className="text-white font-medium">Unified Experience</h3>
-                <p className="text-gray-500 text-sm">One interface for all your AI needs</p>
+                <h3 style={{ color: 'white', fontWeight: 600, fontSize: '1.125rem', marginBottom: '0.25rem' }}>Unified Experience</h3>
+                <p style={{ color: '#6b7280' }}>One interface for all your AI needs</p>
               </div>
             </div>
           </div>
 
           {/* Stats */}
-          <div className="flex justify-center gap-12 mt-10 pt-10 border-t border-white/10">
-            <div>
-              <div className="text-3xl font-bold text-white">10+</div>
-              <div className="text-gray-500 text-sm">AI Models</div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '4rem', marginTop: '3.5rem', paddingTop: '3.5rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '2.25rem', fontWeight: 700, color: 'white', marginBottom: '0.5rem' }}>10+</div>
+              <div style={{ color: '#6b7280' }}>AI Models</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-white">∞</div>
-              <div className="text-gray-500 text-sm">Conversations</div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '2.25rem', fontWeight: 700, color: 'white', marginBottom: '0.5rem' }}>∞</div>
+              <div style={{ color: '#6b7280' }}>Conversations</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-white">100%</div>
-              <div className="text-gray-500 text-sm">Your Data</div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '2.25rem', fontWeight: 700, color: 'white', marginBottom: '0.5rem' }}>100%</div>
+              <div style={{ color: '#6b7280' }}>Your Data</div>
             </div>
           </div>
         </div>
