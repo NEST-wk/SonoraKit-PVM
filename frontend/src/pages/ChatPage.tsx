@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { HiPaperAirplane, HiPlus, HiCog6Tooth, HiArrowRightOnRectangle, HiSparkles, HiChatBubbleLeftRight, HiTrash } from 'react-icons/hi2'
@@ -6,11 +6,86 @@ import DarkVeil from '../components/DarkVeil'
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://sonorakit-api-dev.fly.dev'
 
+// Simple Markdown formatter component
+function FormattedMessage({ content }: { content: string }) {
+  const formatted = useMemo(() => {
+    const lines = content.split('\n')
+    const elements: ReactNode[] = []
+    let listItems: string[] = []
+    let listKey = 0
+
+    const formatInline = (text: string, key: number) => {
+      // Bold **text** or __text__
+      let formatted = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      formatted = formatted.replace(/__(.+?)__/g, '<strong>$1</strong>')
+      // Italic *text* or _text_
+      formatted = formatted.replace(/\*(.+?)\*/g, '<em>$1</em>')
+      formatted = formatted.replace(/_(.+?)_/g, '<em>$1</em>')
+      // Code `text`
+      formatted = formatted.replace(/`(.+?)`/g, '<code style="background: rgba(255,255,255,0.1); padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-family: monospace; font-size: 0.875em;">$1</code>')
+      
+      return <span key={key} dangerouslySetInnerHTML={{ __html: formatted }} />
+    }
+
+    const flushList = () => {
+      if (listItems.length > 0) {
+        elements.push(
+          <ul key={`list-${listKey++}`} style={{ margin: '0.5rem 0', paddingLeft: '1.5rem', listStyleType: 'disc' }}>
+            {listItems.map((item, i) => (
+              <li key={i} style={{ marginBottom: '0.25rem' }}>{formatInline(item, i)}</li>
+            ))}
+          </ul>
+        )
+        listItems = []
+      }
+    }
+
+    lines.forEach((line, index) => {
+      const trimmed = line.trim()
+      
+      // Headers
+      if (trimmed.startsWith('### ')) {
+        flushList()
+        elements.push(<h4 key={index} style={{ fontSize: '1rem', fontWeight: 600, margin: '0.75rem 0 0.5rem', color: '#f3f4f6' }}>{formatInline(trimmed.slice(4), index)}</h4>)
+      } else if (trimmed.startsWith('## ')) {
+        flushList()
+        elements.push(<h3 key={index} style={{ fontSize: '1.125rem', fontWeight: 600, margin: '0.75rem 0 0.5rem', color: '#f3f4f6' }}>{formatInline(trimmed.slice(3), index)}</h3>)
+      } else if (trimmed.startsWith('# ')) {
+        flushList()
+        elements.push(<h2 key={index} style={{ fontSize: '1.25rem', fontWeight: 700, margin: '0.75rem 0 0.5rem', color: 'white' }}>{formatInline(trimmed.slice(2), index)}</h2>)
+      }
+      // List items
+      else if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
+        listItems.push(trimmed.slice(2))
+      }
+      else if (/^\d+\.\s/.test(trimmed)) {
+        listItems.push(trimmed.replace(/^\d+\.\s/, ''))
+      }
+      // Empty line
+      else if (trimmed === '') {
+        flushList()
+        elements.push(<div key={index} style={{ height: '0.5rem' }} />)
+      }
+      // Regular paragraph
+      else {
+        flushList()
+        elements.push(<p key={index} style={{ margin: '0.25rem 0', lineHeight: 1.6 }}>{formatInline(trimmed, index)}</p>)
+      }
+    })
+
+    flushList()
+    return elements
+  }, [content])
+
+  return <div>{formatted}</div>
+}
+
 interface Message {
   id: string
   role: 'user' | 'assistant'
   content: string
   timestamp: Date
+  provider?: string
 }
 
 interface ChatHistory {
@@ -164,7 +239,8 @@ export default function ChatPage() {
         id: data.message_id || (Date.now() + 1).toString(),
         role: 'assistant',
         content: data.content,
-        timestamp: new Date()
+        timestamp: new Date(),
+        provider: selectedProvider
       }
       
       setMessages(prev => [...prev, assistantMessage])
@@ -186,7 +262,8 @@ export default function ChatPage() {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
         content: `❌ ${err.message || 'Error al conectar con la IA'}\n\nSi no has configurado tu API key, ve a Settings ⚙️ para agregarla.`,
-        timestamp: new Date()
+        timestamp: new Date(),
+        provider: selectedProvider
       }
       setMessages(prev => [...prev, errorMessage])
     } finally {
@@ -422,7 +499,13 @@ export default function ChatPage() {
                       )
                     }}
                   >
-                    <p style={{ whiteSpace: 'pre-wrap' }}>{message.content}</p>
+                    {message.role === 'user' ? (
+                      <p style={{ whiteSpace: 'pre-wrap' }}>{message.content}</p>
+                    ) : message.provider === 'groq' ? (
+                      <FormattedMessage content={message.content} />
+                    ) : (
+                      <p style={{ whiteSpace: 'pre-wrap' }}>{message.content}</p>
+                    )}
                   </div>
                 </div>
               ))}
