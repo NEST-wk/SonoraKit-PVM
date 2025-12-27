@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect, useMemo, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { HiPaperAirplane, HiPlus, HiCog6Tooth, HiArrowRightOnRectangle, HiSparkles, HiChatBubbleLeftRight, HiTrash } from 'react-icons/hi2'
+import { HiPaperAirplane, HiPlus, HiCog6Tooth, HiArrowRightOnRectangle, HiSparkles, HiChatBubbleLeftRight, HiTrash, HiCheckCircle, HiArrowRight } from 'react-icons/hi2'
 import DarkVeil from '../components/DarkVeil'
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://sonorakit-api-dev.fly.dev'
 
-// Simple Markdown formatter component
+// Formateador de texto para respuestas de IA
 function FormattedMessage({ content }: { content: string }) {
   const formatted = useMemo(() => {
     const lines = content.split('\n')
@@ -14,27 +14,27 @@ function FormattedMessage({ content }: { content: string }) {
     let listItems: string[] = []
     let listKey = 0
 
-    const formatInline = (text: string, key: number) => {
-      // Bold **text** or __text__
-      let formatted = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      formatted = formatted.replace(/__(.+?)__/g, '<strong>$1</strong>')
-      // Italic *text* or _text_
-      formatted = formatted.replace(/\*(.+?)\*/g, '<em>$1</em>')
-      formatted = formatted.replace(/_(.+?)_/g, '<em>$1</em>')
-      // Code `text`
-      formatted = formatted.replace(/`(.+?)`/g, '<code style="background: rgba(255,255,255,0.1); padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-family: monospace; font-size: 0.875em;">$1</code>')
-      
-      return <span key={key} dangerouslySetInnerHTML={{ __html: formatted }} />
+    // Limpia el markdown y retorna texto plano con formato
+    const cleanText = (text: string): string => {
+      return text
+        .replace(/\*\*(.+?)\*\*/g, '$1')  // Quitar **bold**
+        .replace(/__(.+?)__/g, '$1')       // Quitar __bold__
+        .replace(/\*(.+?)\*/g, '$1')       // Quitar *italic*
+        .replace(/_(.+?)_/g, '$1')         // Quitar _italic_
+        .replace(/`(.+?)`/g, '$1')         // Quitar `code`
     }
 
     const flushList = () => {
       if (listItems.length > 0) {
         elements.push(
-          <ul key={`list-${listKey++}`} style={{ margin: '0.5rem 0', paddingLeft: '1.5rem', listStyleType: 'disc' }}>
+          <div key={`list-${listKey++}`} style={{ margin: '0.75rem 0' }}>
             {listItems.map((item, i) => (
-              <li key={i} style={{ marginBottom: '0.25rem' }}>{formatInline(item, i)}</li>
+              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <HiCheckCircle style={{ color: '#a78bfa', fontSize: '1rem', marginTop: '0.2rem', flexShrink: 0 }} />
+                <span style={{ lineHeight: 1.5 }}>{cleanText(item)}</span>
+              </div>
             ))}
-          </ul>
+          </div>
         )
         listItems = []
       }
@@ -43,18 +43,18 @@ function FormattedMessage({ content }: { content: string }) {
     lines.forEach((line, index) => {
       const trimmed = line.trim()
       
-      // Headers
-      if (trimmed.startsWith('### ')) {
+      // Headers - convertir a texto destacado
+      if (trimmed.startsWith('### ') || trimmed.startsWith('## ') || trimmed.startsWith('# ')) {
         flushList()
-        elements.push(<h4 key={index} style={{ fontSize: '1rem', fontWeight: 600, margin: '0.75rem 0 0.5rem', color: '#f3f4f6' }}>{formatInline(trimmed.slice(4), index)}</h4>)
-      } else if (trimmed.startsWith('## ')) {
-        flushList()
-        elements.push(<h3 key={index} style={{ fontSize: '1.125rem', fontWeight: 600, margin: '0.75rem 0 0.5rem', color: '#f3f4f6' }}>{formatInline(trimmed.slice(3), index)}</h3>)
-      } else if (trimmed.startsWith('# ')) {
-        flushList()
-        elements.push(<h2 key={index} style={{ fontSize: '1.25rem', fontWeight: 700, margin: '0.75rem 0 0.5rem', color: 'white' }}>{formatInline(trimmed.slice(2), index)}</h2>)
+        const headerText = trimmed.replace(/^#+\s/, '')
+        elements.push(
+          <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: '0.75rem 0 0.5rem' }}>
+            <HiArrowRight style={{ color: '#a78bfa', fontSize: '0.875rem' }} />
+            <span style={{ fontWeight: 600, color: '#f3f4f6' }}>{cleanText(headerText)}</span>
+          </div>
+        )
       }
-      // List items
+      // List items con * - o números
       else if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
         listItems.push(trimmed.slice(2))
       }
@@ -64,12 +64,18 @@ function FormattedMessage({ content }: { content: string }) {
       // Empty line
       else if (trimmed === '') {
         flushList()
-        elements.push(<div key={index} style={{ height: '0.5rem' }} />)
+        if (elements.length > 0) {
+          elements.push(<div key={index} style={{ height: '0.5rem' }} />)
+        }
       }
       // Regular paragraph
       else {
         flushList()
-        elements.push(<p key={index} style={{ margin: '0.25rem 0', lineHeight: 1.6 }}>{formatInline(trimmed, index)}</p>)
+        elements.push(
+          <p key={index} style={{ margin: '0.25rem 0', lineHeight: 1.6 }}>
+            {cleanText(trimmed)}
+          </p>
+        )
       }
     })
 
