@@ -1,21 +1,18 @@
 # SonoraKit PVM
 
-<div align="center">
-
 ![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Python](https://img.shields.io/badge/python-3.11+-yellow.svg)
 ![React](https://img.shields.io/badge/react-19.x-61DAFB.svg)
 
-**Un producto de IA personalizable con soporte multi-proveedor**
-
-</div>
+> Un producto de IA personalizable con soporte multi-proveedor
 
 ---
 
 ## 🚀 Características
 
 ### Backend
+
 - **Multi-proveedor de IA**: OpenAI, Anthropic, Google, Mistral, Cohere, Groq, OpenRouter
 - **Encriptación de API Keys**: Fernet encryption para máxima seguridad
 - **FastAPI**: API RESTful moderna, rápida y con documentación automática
@@ -24,6 +21,7 @@
 - **Streaming**: Soporte para respuestas en tiempo real de IA
 
 ### Frontend
+
 - **React 19** con TypeScript
 - **Vite 7**: Build tool ultra-rápido
 - **TailwindCSS 4**: Estilos modernos y responsivos
@@ -34,12 +32,13 @@
 ## 📦 Instalación
 
 ### Requisitos Previos
+
 - Python 3.11+
 - Node.js 18+
 - Cuenta de Firebase
 - Base de datos Neon PostgreSQL
 
-### Backend
+### Instalar Backend
 
 ```bash
 cd backend
@@ -49,7 +48,7 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-### Frontend
+### Instalar Frontend
 
 ```bash
 cd frontend
@@ -91,12 +90,14 @@ VITE_FIREBASE_PROJECT_ID=tu_project_id
 ### Ejecutar
 
 **Backend:**
+
 ```bash
 cd backend
 uvicorn app.main:app --reload --port 8001
 ```
 
 **Frontend:**
+
 ```bash
 cd frontend
 npm run dev
@@ -104,7 +105,7 @@ npm run dev
 
 ## 🏗️ Estructura del Proyecto
 
-```
+```text
 SonoraKit PVM/
 ├── backend/
 │   ├── app/
@@ -135,63 +136,70 @@ SonoraKit PVM/
 
 ## 📄 API Endpoints
 
-### Health
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| `GET` | `/api/v1/health` | Health check |
+### Endpoint Health
 
-### Authentication
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| `POST` | `/api/v1/auth/sync` | Sincronizar usuario Firebase → DB |
-| `GET` | `/api/v1/auth/me` | Obtener perfil del usuario actual |
+| Método | Endpoint         | Descripción  |
+| ------ | ---------------- | ------------ |
+| GET    | /api/v1/health   | Health check |
 
-### AI Configurations
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| `GET` | `/api/v1/ai-configs/providers` | Lista proveedores de IA |
-| `POST` | `/api/v1/ai-configs/` | Crear configuración |
-| `GET` | `/api/v1/ai-configs/` | Listar configuraciones |
+### Endpoint Auth
 
-### Chat
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| `POST` | `/api/v1/chat/completions` | Enviar mensaje y obtener respuesta IA |
-| `GET` | `/api/v1/chat/history` | Obtener historial de chats |
-| `GET` | `/api/v1/chat/{chat_id}` | Obtener chat específico |
-| `DELETE` | `/api/v1/chat/{chat_id}` | Eliminar chat |
+| Método | Endpoint          | Descripción                        |
+| ------ | ----------------- | ---------------------------------- |
+| POST   | /api/v1/auth/sync | Sincronizar usuario Firebase → DB  |
+| GET    | /api/v1/auth/me   | Obtener perfil del usuario actual  |
+
+### Endpoint AI Configurations
+
+| Método | Endpoint                     | Descripción              |
+| ------ | ---------------------------- | ------------------------ |
+| GET    | /api/v1/ai-configs/providers | Lista proveedores de IA  |
+| POST   | /api/v1/ai-configs/          | Crear configuración      |
+| GET    | /api/v1/ai-configs/          | Listar configuraciones   |
+
+### Endpoint Chat
+
+| Método | Endpoint                   | Descripción                         |
+| ------ | -------------------------- | ----------------------------------- |
+| POST   | /api/v1/chat/completions   | Enviar mensaje y obtener respuesta  |
+| GET    | /api/v1/chat/history       | Obtener historial de chats          |
+| GET    | /api/v1/chat/{chat_id}     | Obtener chat específico             |
+| DELETE | /api/v1/chat/{chat_id}     | Eliminar chat                       |
 
 ## 🛠️ Tech Stack
 
-### Backend
+### Stack Backend
+
 - **FastAPI** 0.109 - Framework web async
 - **SQLAlchemy** 2.0 - ORM async con asyncpg
 - **Pydantic** 2.5 - Validación de datos
 - **Firebase Admin** - Verificación de tokens
 - **Cryptography** - Encriptación de API keys
 
-### Frontend
+### Stack Frontend
+
 - **React** 19 - UI Library
 - **TypeScript** 5.9 - Type safety
 - **Vite** 7 - Build tool
 - **TailwindCSS** 4 - Styling
 - **Three.js** - 3D graphics
 
-### Infrastructure
+### Stack Infrastructure
+
 - **Fly.io** - Deployment backend
 - **Neon** - PostgreSQL serverless
 - **Firebase** - Authentication
 
 ## 🚢 Deployment
 
-### Backend (Fly.io)
+### Deploy Backend (Fly.io)
 
 ```bash
 cd backend
 fly deploy --config fly.prod.toml
 ```
 
-### Frontend
+### Deploy Frontend (Vercel)
 
 ```bash
 cd frontend

@@ -1,7 +1,7 @@
 """
 Cliente de base de datos PostgreSQL usando SQLAlchemy + asyncpg para Neon.
 """
-from typing import Optional
+from typing import Optional, AsyncGenerator
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import declarative_base
 from app.core.config import settings
@@ -55,8 +55,8 @@ class Database:
             )
 
             logger.info("Database engine initialized successfully")
-        except Exception as e:
-            logger.error(f"Failed to initialize database: {e}")
+        except (OSError, ValueError) as e:
+            logger.error("Failed to initialize database: %s", e)
 
     @property
     def engine(self):
@@ -97,7 +97,7 @@ db = Database()
 
 
 # Dependency para FastAPI
-async def get_db() -> AsyncSession:
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
     """Dependency para obtener sesión de DB."""
     session = await db.get_session()
     try:

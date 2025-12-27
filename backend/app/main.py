@@ -1,10 +1,11 @@
 """
 Punto de entrada principal de FastAPI.
 """
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from contextlib import asynccontextmanager
 
 from app.core.config import settings
 from app.core.logger import logger
@@ -12,9 +13,9 @@ from app.api.routes import health, ai_configs, auth, chat
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(_application: FastAPI):
     """Ciclo de vida de la aplicación."""
-    logger.info(f"Starting {settings.app_name} v{settings.app_version}")
+    logger.info("Starting %s v%s", settings.app_name, settings.app_version)
     yield
     logger.info("Shutting down")
 
@@ -37,10 +38,10 @@ app.add_middleware(
 )
 
 
-# Exception handlers
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
-    logger.error(f"Unhandled error on {request.url.path}: {exc}")
+    """Manejador global de excepciones no capturadas."""
+    logger.error("Unhandled error on %s: %s", request.url.path, exc)
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={"detail": "Internal server error"}
@@ -56,6 +57,7 @@ app.include_router(chat.router, prefix="/api/v1")
 
 @app.get("/")
 async def root():
+    """Endpoint raíz con información básica de la API."""
     return {
         "message": settings.app_name,
         "version": settings.app_version,
