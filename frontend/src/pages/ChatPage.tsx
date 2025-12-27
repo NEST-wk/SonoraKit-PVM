@@ -249,9 +249,9 @@ export default function ChatPage() {
   const currentProviderModels = providers.find(p => p.id === selectedProvider)?.models || []
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0f', display: 'flex' }}>
+    <div style={{ height: '100vh', backgroundColor: '#0a0a0f', display: 'flex', overflow: 'hidden' }}>
       {/* Sidebar */}
-      <div style={{ width: '16rem', backgroundColor: '#0f0f15', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ width: '16rem', backgroundColor: '#0f0f15', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
         {/* Logo */}
         <div style={{ padding: '1rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -343,9 +343,14 @@ export default function ChatPage() {
       </div>
 
       {/* Main Chat Area */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, position: 'relative', overflow: 'hidden' }}>
+        {/* DarkVeil Background - fixed behind everything */}
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <DarkVeil speed={0.3} />
+        </div>
+
         {/* Header */}
-        <div style={{ height: '3.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 1rem' }}>
+        <div style={{ height: '3.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 1rem', backgroundColor: 'rgba(10, 10, 15, 0.8)', backdropFilter: 'blur(10px)', position: 'relative', zIndex: 2, flexShrink: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <select 
               value={selectedProvider}
@@ -377,14 +382,9 @@ export default function ChatPage() {
         </div>
 
         {/* Messages */}
-        <div style={{ flex: 1, overflowY: 'auto', position: 'relative' }}>
-          {/* DarkVeil Background */}
-          <div style={{ position: 'absolute', inset: 0, zIndex: 0, opacity: 0.4 }}>
-            <DarkVeil speed={0.3} />
-          </div>
-          
+        <div style={{ flex: 1, overflowY: 'auto', position: 'relative', zIndex: 1 }}>
           {messages.length === 0 ? (
-            <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '1rem', position: 'relative', zIndex: 1 }}>
+            <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '1rem' }}>
               <div style={{ width: '4rem', height: '4rem', background: 'linear-gradient(to bottom right, #5227FF, #FF9FFC)', borderRadius: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
                 <HiSparkles style={{ color: 'white', fontSize: '1.875rem' }} />
               </div>
@@ -405,7 +405,7 @@ export default function ChatPage() {
               </div>
             </div>
           ) : (
-            <div style={{ maxWidth: '48rem', margin: '0 auto', padding: '1.5rem 1rem', position: 'relative', zIndex: 1 }}>
+            <div style={{ maxWidth: '48rem', margin: '0 auto', padding: '1.5rem 1rem' }}>
               {messages.map(message => (
                 <div 
                   key={message.id}
@@ -443,7 +443,7 @@ export default function ChatPage() {
         </div>
 
         {/* Input */}
-        <div style={{ padding: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ padding: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: 'rgba(10, 10, 15, 0.8)', backdropFilter: 'blur(10px)', position: 'relative', zIndex: 2, flexShrink: 0 }}>
           <form onSubmit={handleSubmit} style={{ maxWidth: '48rem', margin: '0 auto' }}>
             <div style={{ position: 'relative' }}>
               <input
