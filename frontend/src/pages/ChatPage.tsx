@@ -501,10 +501,8 @@ export default function ChatPage() {
                   >
                     {message.role === 'user' ? (
                       <p style={{ whiteSpace: 'pre-wrap' }}>{message.content}</p>
-                    ) : message.provider === 'groq' ? (
-                      <FormattedMessage content={message.content} />
                     ) : (
-                      <p style={{ whiteSpace: 'pre-wrap' }}>{message.content}</p>
+                      <FormattedMessage content={message.content} />
                     )}
                   </div>
                 </div>
