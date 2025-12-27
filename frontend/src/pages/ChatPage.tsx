@@ -41,7 +41,7 @@ export default function ChatPage() {
     { id: 'anthropic', name: 'Anthropic', models: ['claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022', 'claude-3-opus-20240229'] },
     { id: 'google', name: 'Google', models: ['gemini-2.0-flash-exp', 'gemini-1.5-pro', 'gemini-1.5-flash'] },
     { id: 'mistral', name: 'Mistral', models: ['mistral-large-latest', 'mistral-medium-latest', 'mistral-small-latest', 'codestral-latest'] },
-    { id: 'cohere', name: 'Cohere', models: ['command-r-plus', 'command-r', 'command'] },
+    { id: 'cohere', name: 'Cohere', models: ['command-a-03-2025', 'command-a-reasoning-08-2025', 'command-a-translate-08-2025', 'command-a-vision-07-2025'] },
     { id: 'groq', name: 'Groq', models: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'mixtral-8x7b-32768', 'gemma2-9b-it'] },
     { id: 'openrouter', name: 'OpenRouter', models: ['openai/gpt-4o', 'anthropic/claude-3.5-sonnet', 'google/gemini-pro-1.5', 'meta-llama/llama-3.1-405b-instruct'] },
   ]
