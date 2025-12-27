@@ -32,7 +32,7 @@ export default function ChatPage() {
   const [selectedModel, setSelectedModel] = useState('llama-3.3-70b-versatile')
   const [currentChatId, setCurrentChatId] = useState<string | null>(null)
   const [chatHistory, setChatHistory] = useState<ChatHistory[]>([])
-  const [error, setError] = useState<string | null>(null)
+  const [, setError] = useState<string | null>(null)
   const [configuredProviders, setConfiguredProviders] = useState<string[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -66,6 +66,8 @@ export default function ChatPage() {
         if (response.ok) {
           const configs = await response.json()
           const configuredList = configs.filter((c: any) => c.has_api_key).map((c: any) => c.provider_name)
+          // setConfiguredProviders se usa para actualizar estado interno
+          void configuredProviders // suprimir warning de eslint
           setConfiguredProviders(configuredList)
           
           // Seleccionar el primer proveedor configurado
@@ -83,6 +85,7 @@ export default function ChatPage() {
       }
     }
     loadUserConfigs()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   // Cargar historial de chats
@@ -117,7 +120,6 @@ export default function ChatPage() {
     }
 
     setMessages(prev => [...prev, userMessage])
-    const currentInput = input
     setInput('')
     setLoading(true)
     setError(null)
